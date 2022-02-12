@@ -4,18 +4,20 @@
 
 use std::env;
 use std::fs;
-
+use rand::seq::SliceRandom; 
 
 fn main() {
-    println!("Hello, world!");
     let filename = "all.txt";
 
-    println!("In file {}", filename);
+    //println!("In file {}", filename);
 
     let contents = fs::read_to_string(filename)
         .expect("Something went wrong reading the file");
 
-    println!("With text:\n{}", contents);
+    let all_guesses = contents.lines().collect::<Vec<_>>();
+
+
+    println!("{:?}", all_guesses.choose(&mut rand::thread_rng()).unwrap());
 
 }
 
