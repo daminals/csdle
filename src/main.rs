@@ -15,7 +15,7 @@ fn main() {
         let guess = request_answer(round);
         let verify_guess = verify_answer(&solution, &guess, &round);
         let check_for_wrong_input = wrong_input_loop(&verify_guess, &round, &solution, &guess);
-        println!("{}", check_for_wrong_input.trim_start());
+        println!("{}", check_for_wrong_input);
     }
 }
 // look through the list 
@@ -52,21 +52,28 @@ fn verify_answer(solution: &String, guess: &String, round: &u8) -> String {
     let sol_chars = solution.chars().collect::<Vec<_>>();
     let mut sol_remaining_letters = solution.chars().collect::<Vec<_>>();
     let mut computed_answer = String::from("");
+    // colors
+    let black_text = "\u{001b}[30m";
+    let green_background = "\u{001b}[42m";
+    let yellow_background = "\u{001b}[43m";
+    let white_background = "\u{001b}[107m";
+    let clear_format = "\u{001b}[0m";
+    // check guess loop
     for (index, letter) in guess.chars().enumerate() {
         if solution.contains(letter) && sol_remaining_letters.contains(&letter) {
             //println!("index: {} letter: {}", index, letter);
             //println!("{}", sol_chars[index]);
             if sol_chars[index] == letter {
                 // return letter as green
-                computed_answer += &format!("\u{001b}[32m {} \u{001b}[0m", letter).to_owned();
+                computed_answer += &format!("{} {}{} {}", &green_background, &black_text, letter, &clear_format).to_owned();
             } else {
                 // return letter as yellow
-                computed_answer +=  &format!("\u{001b}[33m {} \u{001b}[0m", letter).to_owned();
+                computed_answer +=  &format!("{} {}{} {}", &yellow_background, &black_text, letter, &clear_format).to_owned();
             }
             let remove_letter = sol_remaining_letters.iter().position(|x| *x == letter).unwrap();
             sol_remaining_letters.remove(remove_letter);    
         } else {
-            computed_answer += &format!(" {} ", letter).to_owned();
+            computed_answer += &format!("{} {}{} {}", &white_background, &black_text, letter, &clear_format).to_owned();
         }
     }
     return computed_answer;
