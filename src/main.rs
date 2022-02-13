@@ -17,6 +17,7 @@ fn main() {
         let check_for_wrong_input = wrong_input_loop(&verify_guess, &round, &solution, &guess);
         println!("{}", check_for_wrong_input);
     }
+    println!("The correct word was '{}'", solution);
 }
 // look through the list 
 fn pick_solution() -> String {
@@ -45,10 +46,6 @@ fn verify_answer(solution: &String, guess: &String, round: &u8) -> String {
         println!("Not a word");
         return "EXIT_REDO_ROUND".to_string();
     }
-    if guess == solution {
-        println!("Yay! You have won in {} guesses!!",round);
-        process::exit(0x0100);
-    }
     let sol_chars = solution.chars().collect::<Vec<_>>();
     let mut sol_remaining_letters = solution.chars().collect::<Vec<_>>();
     let mut computed_answer = String::from("");
@@ -75,6 +72,11 @@ fn verify_answer(solution: &String, guess: &String, round: &u8) -> String {
         } else {
             computed_answer += &format!("{} {}{} {}", &white_background, &black_text, letter, &clear_format).to_owned();
         }
+    }
+    if guess == solution {
+        println!("{}", computed_answer);
+        println!("Yay! You have won in {} guesses!!", round);
+        process::exit(0x0100);
     }
     return computed_answer;
 }

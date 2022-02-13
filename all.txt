@@ -821,6 +821,7 @@ cello
 cells
 cento
 cents
+cents
 chafe
 chaff
 chain
