@@ -2,19 +2,19 @@
 // Daniel Kogan
 // 02.11.2022
 
-use std::env;
 use std::io;
 use std::io::Write;
 use std::fs;
 use rand::seq::SliceRandom; 
+use std::process;
 
 fn main() {
     let solution = pick_solution();
 
-    //println!("{}", &solution); don't tell people the answer lol
+    println!("{}", &solution); //don't tell people the answer lol
     for round in 1..7 {
         let guess = request_answer(round);
-        let verify_guess = verify_answer(&solution, &guess);
+        let verify_guess = verify_answer(&solution, &guess, &round);
         let check_for_wrong_input = wrong_input_loop(&verify_guess, &round, &solution, &guess);
         println!("{}", check_for_wrong_input.trim_start());
     }
@@ -33,7 +33,7 @@ fn request_answer(round: u8) -> String {
     let guess = return_user_input();
     return guess;
 }
-fn verify_answer(solution: &String, guess: &String) -> String {
+fn verify_answer(solution: &String, guess: &String, round: &u8) -> String {
     if guess.len() != 5 {
         if guess.len() > 5 {
             println!("Too many letters");
@@ -41,10 +41,15 @@ fn verify_answer(solution: &String, guess: &String) -> String {
             println!("Not enough letters");
         }
         return "EXIT_REDO_ROUND".to_string();
+
     }
     if !is_real_word(&guess) {
         println!("Not a word");
         return "EXIT_REDO_ROUND".to_string();
+    }
+    if guess == solution {
+        println!("Yay! You have won in {} guesses!!",round);
+        process::exit(0x0100);
     }
 
     let sol_chars = solution.chars().collect::<Vec<_>>();
@@ -81,13 +86,13 @@ fn wrong_input_loop (verify_guess: &String, round: &u8, solution: &String, guess
     //println!("{}", verify_guess);
     if verify_guess == &"EXIT_REDO_ROUND".to_string() {
         let guess = request_answer(*round);
-        let verify_guess = verify_answer(solution, &guess.to_owned());
+        let verify_guess = verify_answer(solution, &guess.to_owned(), round);
         let recursive_check = wrong_input_loop(&verify_guess, round, solution, &guess);
         //println!("\u{001b}[31m {} \u{001b}[0m", recursive_check);
         //println!("{}", verify_answer(solution, &recursive_check));
         return recursive_check;
     }
-    return verify_answer(solution, guess);
+    return verify_answer(solution, guess, round);
 }
 fn is_real_word(guess: &String) -> bool {
     let filename = "solution.txt";

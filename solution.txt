@@ -29,7 +29,6 @@ adult
 affix
 afire
 afoot
-afoul
 after
 again
 agape
@@ -37,9 +36,7 @@ agate
 agent
 agile
 aging
-aglow
 agony
-agora
 agree
 ahead
 aider
@@ -86,8 +83,6 @@ anime
 ankle
 annex
 annoy
-annul
-anode
 antic
 anvil
 aorta
@@ -135,7 +130,6 @@ aware
 awash
 awful
 awoke
-axial
 axiom
 axion
 azure
@@ -657,7 +651,6 @@ endow
 enema
 enemy
 enjoy
-ennui
 ensue
 enter
 entry
@@ -879,7 +872,6 @@ gnome
 godly
 going
 golem
-golly
 gonad
 goner
 goody
@@ -985,7 +977,6 @@ hoard
 hobby
 hoist
 holly
-homer
 honey
 honor
 horde
@@ -1426,7 +1417,6 @@ pizza
 place
 plaid
 plain
-plait
 plane
 plank
 plant
@@ -1735,7 +1725,6 @@ shone
 shook
 shoot
 shore
-shorn
 short
 shout
 shove
@@ -1749,7 +1738,6 @@ shunt
 shush
 shyly
 siege
-sieve
 sight
 sigma
 silky
