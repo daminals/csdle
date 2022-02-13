@@ -11,7 +11,7 @@ use rand::seq::SliceRandom;
 fn main() {
     let solution = pick_solution();
 
-    println!("{}", &solution);
+    //println!("{}", &solution); don't tell people the answer lol
     for round in 1..7 {
         let guess = request_answer(round);
         let verify_guess = verify_answer(&solution, &guess);
