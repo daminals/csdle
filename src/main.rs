@@ -10,8 +10,7 @@ use std::process;
 
 fn main() {
     let solution = pick_solution();
-
-    println!("{}", &solution); //don't tell people the answer lol
+    //println!("{}", &solution); //don't tell people the answer lol
     for round in 1..7 {
         let guess = request_answer(round);
         let verify_guess = verify_answer(&solution, &guess, &round);
@@ -41,7 +40,6 @@ fn verify_answer(solution: &String, guess: &String, round: &u8) -> String {
             println!("Not enough letters");
         }
         return "EXIT_REDO_ROUND".to_string();
-
     }
     if !is_real_word(&guess) {
         println!("Not a word");
@@ -51,7 +49,6 @@ fn verify_answer(solution: &String, guess: &String, round: &u8) -> String {
         println!("Yay! You have won in {} guesses!!",round);
         process::exit(0x0100);
     }
-
     let sol_chars = solution.chars().collect::<Vec<_>>();
     let mut sol_remaining_letters = solution.chars().collect::<Vec<_>>();
     let mut computed_answer = String::from("");
@@ -80,7 +77,7 @@ fn return_user_input() -> String {
     .read_line(&mut input_output)
     .expect("Failed to read line");
     
-    input_output.trim().to_string()
+    return input_output.trim().to_string()
 }
 fn wrong_input_loop (verify_guess: &String, round: &u8, solution: &String, guess: &String) -> String {
     //println!("{}", verify_guess);
