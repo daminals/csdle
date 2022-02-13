@@ -9,6 +9,7 @@ use rand::seq::SliceRandom;
 use std::process;
 
 fn main() {
+    print!("{esc}[2J{esc}[1;1H", esc = 27 as char); // clear terminal
     let solution = pick_solution();
     //println!("{}", &solution); //don't tell people the answer lol
     for round in 1..7 {
