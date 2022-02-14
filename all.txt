@@ -47,6 +47,7 @@ adder
 addle
 adept
 adieu
+adieu
 adios
 adlib
 adman
@@ -500,6 +501,7 @@ bless
 blest
 blimp
 blind
+bling
 blini
 blink
 blips
@@ -3852,6 +3854,7 @@ puppy
 puree
 purer
 purge
+purim
 purls
 purrs
 purse

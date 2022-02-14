@@ -1,4 +1,3 @@
-
 aback
 abase
 abate
@@ -172,7 +171,6 @@ begin
 begun
 being
 belch
-belie
 belle
 belly
 below
@@ -311,13 +309,11 @@ cabal
 cabby
 cabin
 cable
-cacao
 cache
 cacti
 caddy
 cadet
 cagey
-cairn
 camel
 cameo
 canal
@@ -364,7 +360,6 @@ cheer
 chess
 chest
 chick
-chide
 chief
 child
 chili
@@ -433,7 +428,6 @@ comma
 conch
 condo
 conic
-copse
 coral
 corer
 corny
@@ -828,7 +822,6 @@ gaffe
 gaily
 gamer
 gamma
-gamut
 gassy
 gaudy
 gauge
@@ -953,15 +946,12 @@ hasty
 hatch
 hater
 haunt
-haute
 haven
 havoc
 hazel
 heady
 heard
 heart
-heath
-heave
 heavy
 hedge
 hefty
@@ -985,7 +975,6 @@ horde
 horny
 horse
 hotel
-hotly
 hound
 house
 hovel
@@ -1011,10 +1000,8 @@ icing
 ideal
 idiom
 idiot
-idler
 idyll
 igloo
-iliac
 image
 imbue
 impel
@@ -1060,7 +1047,6 @@ jumpy
 junta
 junto
 juror
-kappa
 karma
 kayak
 kebab
