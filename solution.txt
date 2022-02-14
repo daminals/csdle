@@ -318,6 +318,7 @@ camel
 cameo
 canal
 candy
+canes
 canny
 canoe
 canon
@@ -440,7 +441,6 @@ court
 coven
 cover
 covet
-covey
 cower
 coyly
 crack
