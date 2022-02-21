@@ -80,3 +80,12 @@ gnome
 utils
 micro
 cases
+serve
+cable
+geeks
+nerds
+tests
+hacks
+adobe
+cisco
+tesla
