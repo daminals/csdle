@@ -110,7 +110,9 @@ fn wrong_input_loop (verify_guess: &String, round: &u8, solution: &String, guess
     return verify_answer(solution, guess, round);
 }
 fn is_real_word(guess: &String) -> bool {
-    let filename = "solution.txt";
+    return is_in_file(&guess, "solution.txt") || is_in_file(guess, "all.txt")
+}
+fn is_in_file(guess: &String, filename: &str) -> bool {
     let contents = fs::read_to_string(filename)
         .expect("Something went wrong reading the file");
     let all_words = contents.lines().collect::<Vec<_>>();
