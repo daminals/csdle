@@ -79,3 +79,4 @@ board
 gnome
 utils
 micro
+cases
