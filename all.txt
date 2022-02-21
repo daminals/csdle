@@ -12,6 +12,7 @@ abeam
 abend
 abets
 abhor
+point
 abide
 abled
 abler

@@ -25,8 +25,16 @@ fn pick_solution() -> String {
     let filename = "solution.txt";
     let contents = fs::read_to_string(filename)
         .expect("Something went wrong reading the file");
-    let all_guesses = contents.lines().collect::<Vec<_>>();
-    return all_guesses.choose(&mut rand::thread_rng()).unwrap().to_string();
+    let all_guesses = contents.lines().collect::<Vec<&str>>();
+    return pick_solution_loop(all_guesses);
+}
+fn pick_solution_loop(all_possible_solutions: Vec<&str>) -> String{
+    loop {
+        let solution = all_possible_solutions.choose(&mut rand::thread_rng()).unwrap().to_string();
+        if solution.len() == 5 {
+            return String::from(solution);
+        }
+    }
 }
 fn request_answer(round: u8) -> String {
     print!("Guess {}. ", round);
