@@ -71,25 +71,16 @@ fn verify_answer(solution: &String, guess: &String, round: &u8) -> String {
         println!("Not a word");
         return "EXIT_REDO_ROUND".to_string();
     }
-    let sol_chars = solution.chars().collect::<Vec<_>>();
-    let mut sol_remaining_letters = solution.chars().collect::<Vec<_>>();
     let mut computed_answer = String::from("");
     // colors
     let black_text = "\u{001b}[30m";
-    let green_background = "\u{001b}[42m";
-    let yellow_background = "\u{001b}[43m";
-    let white_background = "\u{001b}[107m";
     let clear_format = "\u{001b}[0m";
     // check guess loop
     
-    let color_guess = return_green_letters(&guess, &solution);
-    //println!("{:?}", color_guess);
-    let color_guess = return_gray_letters(&guess, &solution, color_guess);
-    let mut color_guess = return_yellow_letters(&guess, &solution, color_guess);
-    sort_LetterPosition(&mut color_guess);
+    let color_output = return_output_vector(&guess, &solution);
 
-    let mut computed_answer = "".to_string();
-    for item in color_guess {
+    for item in color_output {
+        // print out every element of the output, with their colors
         let col: &str = &String::from(item.color).to_owned()[..];
         let letter: &str = &String::from(item.letter).to_owned()[..];
         computed_answer += &format!("{}{} {} {}", col, &black_text, letter, &clear_format).to_owned()[..];
@@ -174,29 +165,33 @@ fn subtract_hashmap(mut current_HM: HashMap<char, i32>, character: char) -> Hash
     return current_HM;
 }
 fn return_yellow_letters(guess: &str, solution: &str, mut yellow_letters: Vec<LetterPosition>) -> Vec<LetterPosition> {
-    //let mut logs = File::create("logs.txt").unwrap();
     let sol_chars = solution.chars().collect::<Vec<char>>(); // collect solution too
-    //writeln!(&mut logs, "green + gray array {:?}", yellow_letters); // log
-    let guess_hashmap = create_frequency_hashmap(guess);
     let mut solution_hashmap = create_frequency_hashmap(solution);
-    //writeln!(&mut logs, "guess hashmap {:?}", guess_hashmap);
-    //writeln!(&mut logs, "solution hashmap {:?}", solution_hashmap);
-    for used_letter in &yellow_letters { // for all letters already used, 
+    for used_letter in &yellow_letters { // for all letters already used, subtract them out
         solution_hashmap = subtract_hashmap(solution_hashmap, used_letter.letter)
     }
-    //writeln!(&mut logs, "new solution hashmap {:?}", solution_hashmap);
     for (index, letter) in guess.chars().enumerate() {
         let letter_frequency_in_solution = unwrap_hashmap_value(&solution_hashmap, &letter);
         if (letter_frequency_in_solution > 0) && solution.contains(letter) && (sol_chars[index] != letter) {
             yellow_letters.push(LetterPosition { letter: letter, position: index, color: "\u{001b}[43m".to_string() } );
-            solution_hashmap = subtract_hashmap(solution_hashmap, letter);
+            solution_hashmap = subtract_hashmap(solution_hashmap, letter); // subtract letters just tracked
         } else if solution.contains(letter) && (sol_chars[index] != letter) {
             yellow_letters.push(LetterPosition { letter: letter, position: index, color: "\u{001b}[107m".to_string() } );
+            // return gray letters for letters that would be yellow if they were more frequent
         }
     }
     return yellow_letters;
 }
+// create the output
+fn return_output_vector(guess: &str, solution: &str) -> Vec<LetterPosition>{
+    let color_guess = return_green_letters(&guess, &solution);
+    let color_guess = return_gray_letters(&guess, &solution, color_guess);
+    let mut color_guess = return_yellow_letters(&guess, &solution, color_guess);
+    sort_LetterPosition(&mut color_guess);
+    return color_guess;
 
+}
+// if a key exists, return its value
 fn unwrap_hashmap_value(hm: &HashMap<char, i32>, key: &char) -> i32 {
     if hm.contains_key(&key) {
         return hm[&key]

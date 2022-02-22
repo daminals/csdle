@@ -1,4 +1,0 @@
-green + gray array [LetterPosition { letter: 'p', position: 0, color: "\u{1b}[42m" }, LetterPosition { letter: 'o', position: 2, color: "\u{1b}[42m" }, LetterPosition { letter: 'y', position: 4, color: "\u{1b}[42m" }]
-guess hashmap {'o': 2, 'p': 2, 'y': 1}
-solution hashmap {'r': 1, 'y': 1, 'p': 1, 'o': 1, 'x': 1}
-new solution hashmap {'r': 1, 'y': 0, 'p': 0, 'o': 0, 'x': 1}
