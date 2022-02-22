@@ -20,4 +20,14 @@ The rules for Wordle are as follows:
 
 ## What I learned
 
-I learned about reading through text files, parsing and unwrapping, error handling, and while loops (although I replaced them with recursion) in Rust.
+While running my wordle clone for this variant, I discovered a bug within it. It would output a yellow letter and a green when a user inputted a word with a duplicate a letter and one was at the correct index and the solution only had one of these letters. 
+
+Put simply, it reached an edge case where it returned a yellow letter where a gray one should have been.
+
+I mulled over how to fix this issue and tried implementing various different data structures to no avail. I used linked lists, vectors, structs, arrays and all sorts of other methods unsuccessfully. I also switched from handling all letters together to seperate functions for each implementation case (green, gray, yellow).
+
+Eventually, I was able to use HashMaps to track the frequency of a letter in the solution, and compare it to the used letters.
+
+I also learned how to use sorts on a struct, as when I switched to a custom struct vector rather than a one-by-one approach, my output was out of order. I added an index element to the struct and learned how to implement my own 'sort by key' Rust method
+
+I look forward to using this knowledge of data structures, implementations, and more in my future projects!
