@@ -8,7 +8,7 @@ use std::io::Write;
 use std::fs;
 use rand::seq::SliceRandom; 
 use std::process;
-use array_tool::vec::Intersect;
+use std::collections::HashMap;
 
 #[derive(Debug)]
 struct LetterPosition {
@@ -150,40 +150,57 @@ fn return_gray_letters(guess: &str, solution: &str, mut gray_letters: Vec<Letter
     }
     return gray_letters;
 }
-fn return_yellow_letters(guess: &str, solution: &str, mut yellow_letters: Vec<LetterPosition>) -> Vec<LetterPosition> {
-    let mut logs = File::create("logs.txt").unwrap();
-    
-    let mut remaining_letters = guess.chars().collect::<Vec<char>>();
-    let sol_chars = solution.chars().collect::<Vec<char>>();
-    writeln!(&mut logs, "green + gray array {:?}", yellow_letters);
-    writeln!(&mut logs, "initial array {:?}", yellow_letters);
-    let mut charr_array: Vec<char> = vec![];
-    for letter in &yellow_letters {
-        charr_array.push(letter.letter);
+fn create_frequency_hashmap(text: &str) -> HashMap<char, i32>{
+    let mut char_frequency = HashMap::new();
+    for character in text.chars().collect::<Vec<char>>() {
+        if !char_frequency.contains_key(&character) {
+            char_frequency.insert(
+                character,
+                1
+            );
+        } else {
+            *char_frequency.get_mut(&character).unwrap() += 1;
+            //char_frequency[&character] += 1;
+        }
     }
-    remaining_letters = remaining_letters.intersect(charr_array);
-    let final_gray_letters = remaining_letters.clone();
-    let mut remaining_letters = remaining_letters.intersect(sol_chars);
-    let sol_chars = solution.chars().collect::<Vec<char>>();
-    writeln!(&mut logs, "new array {:?}", remaining_letters);
-
-    //println!("{:?}", guess.chars().enumerate());
-
+    return char_frequency;
+}
+fn subtract_hashmap(mut current_HM: HashMap<char, i32>, character: char) -> HashMap<char, i32> {
+    if current_HM.contains_key(&character) {
+        if current_HM[&character] > 0 {
+            *current_HM.get_mut(&character).unwrap() -= 1
+        }
+    }
+    return current_HM;
+}
+fn return_yellow_letters(guess: &str, solution: &str, mut yellow_letters: Vec<LetterPosition>) -> Vec<LetterPosition> {
+    //let mut logs = File::create("logs.txt").unwrap();
+    let sol_chars = solution.chars().collect::<Vec<char>>(); // collect solution too
+    //writeln!(&mut logs, "green + gray array {:?}", yellow_letters); // log
+    let guess_hashmap = create_frequency_hashmap(guess);
+    let mut solution_hashmap = create_frequency_hashmap(solution);
+    //writeln!(&mut logs, "guess hashmap {:?}", guess_hashmap);
+    //writeln!(&mut logs, "solution hashmap {:?}", solution_hashmap);
+    for used_letter in &yellow_letters { // for all letters already used, 
+        solution_hashmap = subtract_hashmap(solution_hashmap, used_letter.letter)
+    }
+    //writeln!(&mut logs, "new solution hashmap {:?}", solution_hashmap);
     for (index, letter) in guess.chars().enumerate() {
-        //println!("{}", letter);
-        //println!("{:?}", remaining_letters);
-        if remaining_letters.contains(&letter) && solution.contains(letter) && (sol_chars[index] != letter) {
+        let letter_frequency_in_solution = unwrap_hashmap_value(&solution_hashmap, &letter);
+        if (letter_frequency_in_solution > 0) && solution.contains(letter) && (sol_chars[index] != letter) {
             yellow_letters.push(LetterPosition { letter: letter, position: index, color: "\u{001b}[43m".to_string() } );
-            remaining_letters = drop_letter(&mut remaining_letters, letter);
-        } else if final_gray_letters.contains(&letter) && solution.contains(letter) && (sol_chars[index] != letter) {
+            solution_hashmap = subtract_hashmap(solution_hashmap, letter);
+        } else if solution.contains(letter) && (sol_chars[index] != letter) {
             yellow_letters.push(LetterPosition { letter: letter, position: index, color: "\u{001b}[107m".to_string() } );
         }
     }
-    println!("{:?}", yellow_letters);
     return yellow_letters;
 }
-fn drop_letter(char_array: &mut Vec<char>, letter: char) -> Vec<char> {
-    let remove_letter = char_array.iter().position(|x| *x == letter).unwrap();
-    char_array.remove(remove_letter);    
-    return char_array.to_vec();
+
+fn unwrap_hashmap_value(hm: &HashMap<char, i32>, key: &char) -> i32 {
+    if hm.contains_key(&key) {
+        return hm[&key]
+    } else {
+        return 0
+    }
 }
