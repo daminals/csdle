@@ -2,7 +2,6 @@
 // Daniel Kogan
 // 02.11.2022
 
-use crate::fs::File;
 use std::io;
 use std::io::Write;
 use std::fs;
@@ -20,7 +19,7 @@ struct LetterPosition {
 fn letter_by_position(letter_pos: &LetterPosition) -> usize {
     letter_pos.position
 }
-fn sort_LetterPosition(letter_pos: &mut Vec<LetterPosition>) {
+fn sort_letter_position(letter_pos: &mut Vec<LetterPosition>) {
     letter_pos.sort_by_key(letter_by_position);
 }
 
@@ -156,13 +155,13 @@ fn create_frequency_hashmap(text: &str) -> HashMap<char, i32>{
     }
     return char_frequency;
 }
-fn subtract_hashmap(mut current_HM: HashMap<char, i32>, character: char) -> HashMap<char, i32> {
-    if current_HM.contains_key(&character) {
-        if current_HM[&character] > 0 {
-            *current_HM.get_mut(&character).unwrap() -= 1
+fn subtract_hashmap(mut current_hm: HashMap<char, i32>, character: char) -> HashMap<char, i32> {
+    if current_hm.contains_key(&character) {
+        if current_hm[&character] > 0 {
+            *current_hm.get_mut(&character).unwrap() -= 1
         }
     }
-    return current_HM;
+    return current_hm;
 }
 fn return_yellow_letters(guess: &str, solution: &str, mut yellow_letters: Vec<LetterPosition>) -> Vec<LetterPosition> {
     let sol_chars = solution.chars().collect::<Vec<char>>(); // collect solution too
@@ -187,7 +186,7 @@ fn return_output_vector(guess: &str, solution: &str) -> Vec<LetterPosition>{
     let color_guess = return_green_letters(&guess, &solution);
     let color_guess = return_gray_letters(&guess, &solution, color_guess);
     let mut color_guess = return_yellow_letters(&guess, &solution, color_guess);
-    sort_LetterPosition(&mut color_guess);
+    sort_letter_position(&mut color_guess);
     return color_guess;
 
 }
